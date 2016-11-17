@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < e.getStackTrace().length; i++) {
             str.append(e.getStackTrace()[i]).append("\n");
         }
-        error="你的网络有可能有点问题,请检查一下.";
+        error="你的网络有可能有点问题,请检查一下。";
 
         return error;
     }
