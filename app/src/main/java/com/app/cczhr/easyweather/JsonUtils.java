@@ -1,22 +1,42 @@
 package com.app.cczhr.easyweather;
 
-import android.widget.TextView;
+
+
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
+
+import static com.app.cczhr.easyweather.MainActivity.city;
 
 /**
  * Created by cczhr on 2016/10/7.
  */
 
-public class JsonUtils {
+public class JsonUtils extends MainActivity {
     private  String praseJson;
     private String basic;
     private String now;
     private String hourly_forecast;
-    private String suggestion;
+    private String okk;
     private String daily_forecast;
-    public String praseJson(String jsonData) {
+    private SharedPreferences pref;
 
-             JavaBean bean =GsonImpl.get().toObject(jsonData,JavaBean.class);
+
+    /*public void onCreate(Bundle savedInstanceState) {
+        save(bean.getHeWeatherdataservice().get(0).getBasic().getCity());
+    }*/
+
+    public String praseJson (String  jsonData,Context context) {
+        JavaBean bean =GsonImpl.get().toObject(jsonData,JavaBean.class);
+
+
          if(bean.getHeWeatherdataservice().get(0).getStatus().equals("ok")) {
+
+             save(bean.getHeWeatherdataservice().get(0).getBasic().getCity(),context);
+             Toast.makeText(context, "已更新", Toast.LENGTH_SHORT).show();
              basic = "你输入的城市：" + bean.getHeWeatherdataservice().get(0).getBasic().getCity() + "\n" + "天气更新时间：" +
                      bean.getHeWeatherdataservice().get(0).getBasic().getUpdate().getLoc() + "\n";
 
@@ -42,85 +62,20 @@ public class JsonUtils {
                      + bean.getHeWeatherdataservice().get(0).getDaily_forecast().get(1).getTmp().getMin() + "℃" + "\n" + "降雨概率为:" + bean.getHeWeatherdataservice().get(0).getDaily_forecast().get(1).getPop() + "%" +
                      "\n" + "\n" + "日期： " + bean.getHeWeatherdataservice().get(0).getDaily_forecast().get(2).getDate() + "\n" + "最高温度：" + bean.getHeWeatherdataservice().get(0).getDaily_forecast().get(2).getTmp().getMax() + "℃" + "\t" + " 最低温度："
                      + bean.getHeWeatherdataservice().get(0).getDaily_forecast().get(2).getTmp().getMin() + "℃" + "\n" + "降雨概率为:" + bean.getHeWeatherdataservice().get(0).getDaily_forecast().get(2).getPop() + "%";
-             praseJson = basic + now + hourly_forecast+ daily_forecast;
+             praseJson = basic + now + hourly_forecast + daily_forecast;
+
              return praseJson;
+
          }
+
         else{
-             praseJson="你输入的城市错误，请检查一下哦~";
+             Toast.makeText(context, "你输入的城市错误，请检查一下。", Toast.LENGTH_SHORT).show();
+             praseJson="";
              return praseJson;
          }
-
-
-           // JavaBean.HeWeatherdataserviceBean.AqiBean.CityBean b22=new JavaBean.HeWeatherdataserviceBean.AqiBean.CityBean();
-
-
-            //reader.beginObject();
-           /* System.out.println(reader.nextName());
-            reader.beginArray();
-            reader.beginObject();
-            System.out.println(reader.nextName());
-            reader.beginObject();
-            System.out.println(reader.nextName());
-            reader.beginObject();
-            while (reader.hasNext()) {
-            System.out.println(reader.nextName());
-            System.out.println(reader.nextString());}*/
-
-
-
-
-
-
-
-
-
-           // System.out.println("8999999");
-         //  while (reader.hasNext()) {
-               // reader.beginObject();
-              //String id = reader.nextString();
-              // System.out.println("88888888888888888");
-               //System.out.println(id);
-                //while (reader.hasNext()) {
-
-                    //String name1 = reader.nextName();
-                   // System.out.println(name1);
-                    // System.out.println("88888888888888888");
-                    // reader.beginObject();
-               // System.out.println(id);
-               // System.out.println("8999999");
-                //}
-               // String name2 = reader.nextName();
-                //System.out.println(name2);
-                //reader.beginObject();
-
-
-                //while (reader.hasNext()) {
-                  //  System.out.println("99999999999999999999");
-                  //  String name = reader.nextName();
-                  //  System.out.println(name);
-                   // reader.beginObject();
-                   // if (name.equals("retData")) {
-
-                      // System.out.println("00000000000");
-
-                   // }
-              //  }
-
-            //}
-            //reader.endObject();
-            ///}
-
-            // else if(tagName.equals("userId")){
-            //   System.out.println(reader.nextString());
-           // }
-
-
-
-
-
-
 
    }
+
 }
 
 
